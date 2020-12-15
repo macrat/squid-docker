@@ -1,6 +1,8 @@
 squid-docker
 ============
 
+[![dockeri.co](https://dockeri.co/image/macrat/squid)](https://hub.docker.com/r/macrat/squid)
+
 Docker image for [Squid](http://www.squid-cache.org/).
 
 
