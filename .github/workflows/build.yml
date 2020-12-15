@@ -13,14 +13,20 @@ jobs:
     steps:
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
-      - name: login
+      - name: login DockerHub
         uses: docker/login-action@v1
         with:
           username: macrat
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: login GitHub container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: macrat
+          password: ${{ secrets.GHCR_TOKEN }}
       - name: generate tags
         id: tags
-        run: 'echo "::set-output name=TAGS::macrat/squid:latest,macrat/squid:$(date +%Y-%m-%d)"'
+        run: 'echo "::set-output name=TAGS::macrat/squid:latest,macrat/squid:$(date +%Y-%m-%d),ghcr.io/macrat/squid:latest,ghcr.io/macrat/squid:$(date +%Y-%m-%d)"'
       - name: build and push
         uses: docker/build-push-action@v2
         with:
