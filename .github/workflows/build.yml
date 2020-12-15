@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: generate tags
         id: tags
-        run: echo '::set-output name=TAGS::macrat/squid:latest,macrat/squid:$(date +%Y-%m-%d)'
+        run: 'echo "::set-output name=TAGS::macrat/squid:latest,macrat/squid:$(date +%Y-%m-%d)"'
       - name: build and push
         uses: docker/build-push-action@v2
         with:
