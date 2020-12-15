@@ -14,12 +14,11 @@ jobs:
       - name: login
         uses: docker/login-action@v1
         with:
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
-          registry: ghcr.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: build and push
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/macrat/squid:latest
+          tags: macrat/squid:latest
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
