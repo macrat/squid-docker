@@ -26,7 +26,12 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       - name: generate tags
         id: tags
-        run: 'echo "::set-output name=TAGS::macrat/squid:latest,macrat/squid:$(date +%Y-%m-%d),ghcr.io/macrat/squid:latest,ghcr.io/macrat/squid:$(date +%Y-%m-%d)"'
+        run: |
+          TAGS="macrat/squid:latest"
+          TAGS="${TAGS},macrat/squid:$(date +%Y-%m-%d)"
+          TAGS="${TAGS},ghcr.io/macrat/squid:latest"
+          TAGS="${TAGS},ghcr.io/macrat/squid:$(date +%Y-%m-%d)"
+          echo "::set-output name=TAGS::${TAGS}"
       - name: build and push
         uses: docker/build-push-action@v2
         with:
