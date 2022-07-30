@@ -23,20 +23,16 @@ jobs:
           username: macrat
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: generate tags
-        id: vars
+        id: tags
         run: |
-          echo "::set-output name=TAG::$(date +%Y-%m-%d)"
+          TAGS="macrat/squid:latest"
+          TAGS="${TAGS},macrat/squid:$(date +%Y-%m-%d)"
+          TAGS="${TAGS},ghcr.io/macrat/squid:latest"
+          TAGS="${TAGS},ghcr.io/macrat/squid:$(date +%Y-%m-%d)"
+          echo "::set-output name=TAGS::${TAGS}"
       - name: build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: |
-            macrat/squid:latest,macrat/squid:${{ steps.vars.outputs.TAG }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-      - name: build and push
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: |
-            ghcr.io/macrat/squid:latest,ghcr.io/macrat/squid:${{ steps.vars.outputs.TAG }}
+          tags: ${{ steps.tags.outputs.TAGS }}
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
