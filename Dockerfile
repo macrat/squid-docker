@@ -13,5 +13,7 @@ COPY squid.conf /etc/squid/conf.d/01-docker.conf
 EXPOSE 3128
 USER squid
 
+HEALTHCHECK CMD wget --spider -q http://localhost:3128
+
 ENTRYPOINT ["/usr/sbin/squid"]
 CMD ["--foreground", "-d", "1"]
