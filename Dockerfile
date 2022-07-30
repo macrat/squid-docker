@@ -1,5 +1,7 @@
 FROM alpine:latest
-MAINTAINER MacRat <m@crat.jp>
+
+LABEL description="Docker image for Squid HTTP proxy"
+LABEL maintainer="m@crat.jp"
 
 RUN apk add --no-cache squid && \
     install -d -o squid -g squid /etc/squid/conf.d /var/run/squid && \
